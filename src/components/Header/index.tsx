@@ -1,29 +1,41 @@
 import styled from "styled-components";
 import Logo from "../Logo";
-import Icons from "../Icons";
+import Settings from "../../assets/settings.svg";
+import ProfilePic from "../../assets/usericon.svg";
 
 const HeaderContainer = styled.header`
     background-color: #1a3c5a;
     display: flex;
     color: white;
     justify-content: space-between;
-    align-items: center;
 `
-const ProfileContainer = styled.div`
+const ProfileContainer = styled.img`
+    width: 100px;
+    height: 100%;
+    object-fit: contain;
+`
+
+const SettingsContainer = styled.img`
+    width: 100px;
+    height: 100%;
+    object-fit: contain;
+`
+
+const UserMenu = styled.div`
     display: flex;
     align-items: center;
-    margin-right: 20px;
-    gap: 10px;
+    justify-content: flex-end;
 `
 
 function Header() {
     return (
         <HeaderContainer>
             <Logo />
-            <ProfileContainer>
-                <Icons />
-                <p>Usuário</p>
-            </ProfileContainer>
+            <UserMenu>
+                <ProfileContainer src={ProfilePic} alt="Profile Pic" />
+                <p>Username</p>
+                <SettingsContainer src={Settings} alt="Settings" />
+            </UserMenu>
         </HeaderContainer>
     )
 }
