@@ -24,7 +24,6 @@ const Value = styled.p`
 
 const Icon = styled.img`
     width: 100px;
-    height: 100px;
     object-fit: contain;
     display: flex;
     align-items: center;

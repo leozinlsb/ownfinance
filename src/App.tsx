@@ -1,6 +1,9 @@
 import Header from "./components/Header";
 import DashboardCard from "./components/DashboardCard/index.tsx"
 import styled from "styled-components";
+import IncomeIcon from './assets/entrada.svg';
+import OutcomeIcon from './assets/saida.svg';
+import BalanceIcon from './assets/saldo.svg';
 
 const AppContainer = styled.div`
     height: 100vh;
@@ -18,9 +21,9 @@ function App() {
     <AppContainer>
       <Header />
       <DashSection>
-        <DashboardCard title="ENTRADAS" value="R$ 1.250,00" icon="" />
-        <DashboardCard title="SAÍDAS" value="R$ 1.250,00" icon="" />
-        <DashboardCard title="SALDO" value="R$ 1.250,00" icon="" />
+        <DashboardCard title="ENTRADAS" value="R$ 1.250,00" icon={IncomeIcon} />
+        <DashboardCard title="SAÍDAS" value="R$ 1.250,00" icon={OutcomeIcon} />
+        <DashboardCard title="SALDO" value="R$ 1.250,00" icon={BalanceIcon} />
       </DashSection>
     </AppContainer>
   )
