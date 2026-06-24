@@ -13,12 +13,14 @@ const ProfileContainer = styled.img`
     width: 100px;
     height: 100%;
     object-fit: contain;
+    cursor: pointer;
 `
 
 const SettingsContainer = styled.img`
     width: 100px;
     height: 100%;
     object-fit: contain;
+    cursor: pointer;
 `
 
 const UserMenu = styled.div`

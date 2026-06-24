@@ -6,10 +6,14 @@ const LogoImg = styled.img`
     width: auto; 
     object-fit: contain;
     margin-right: 10px;
+    cursor: pointer;
 `
 
 const LogoContainer = styled.div`
     display: flex;
+    align-items: center;
+    margin-left: 20px;
+    height: 100%;
 `
 
 function Logo() {
