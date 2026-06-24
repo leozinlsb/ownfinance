@@ -23,7 +23,7 @@ const Title = styled.h2`
 `
 
 const Value = styled.p`
-    font-size 36px;
+    font-size: 36px;
     font-weight: bold;
     color: #000000;
 `
@@ -48,8 +48,10 @@ function DashboardCard({ title, value, icon }: DashboardCardProps) {
         <CardContainer>
             <Card>
                 <Icon src={icon} alt="Icon" />
-                <Title>{title}</Title>
-                <Value>{value}</Value>
+                <div>
+                    <Title>{title}</Title>
+                    <Value>{value}</Value>
+                </div>
             </Card>
         </CardContainer>
     )

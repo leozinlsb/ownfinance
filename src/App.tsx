@@ -14,7 +14,8 @@ const AppContainer = styled.div`
 
 const DashSection = styled.section`
     display: flex;
-    justi
+    width: 100%;
+    
 `
 
 function App() {
