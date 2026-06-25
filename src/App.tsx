@@ -4,12 +4,20 @@ import styled from "styled-components";
 import IncomeIcon from './assets/entrada.svg';
 import OutcomeIcon from './assets/saida.svg';
 import BalanceIcon from './assets/saldo.svg';
+import TransactionForms from "./components/TransactionForms";
 
 const AppContainer = styled.div`
     height: 100vh;
 `
 
 const DashSection = styled.section`
+    display: flex;
+    width: auto;
+    justify-content: center;
+    gap: 30px;
+`
+
+const TransactionsSection = styled.section`
     display: flex;
     width: auto;
     justify-content: center;
@@ -25,6 +33,9 @@ function App() {
         <DashboardCard title="SAÍDAS" value="R$ 1.250,00" icon={OutcomeIcon} />
         <DashboardCard title="SALDO" value="R$ 1.250,00" icon={BalanceIcon} />
       </DashSection>
+      <TransactionsSection>
+        <TransactionForms />
+      </TransactionsSection>
     </AppContainer>
   )
 }

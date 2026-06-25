@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Title } from "../Title";
 
 const Card = styled.div`
     background-color: white;
@@ -9,12 +10,6 @@ const Card = styled.div`
     display: flex;
     align-items: center;
     margin: 20px;
-`
-
-const Title = styled.h2`
-    font-size: clamp(16px, 1.5vw, 24px);
-    font-weight: 600;
-    color: #333;
 `
 
 const Value = styled.p`
