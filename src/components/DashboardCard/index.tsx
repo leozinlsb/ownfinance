@@ -8,6 +8,7 @@ const Card = styled.div`
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
+    margin: 20px;
 `
 
 const Title = styled.h2`
@@ -28,6 +29,7 @@ const Icon = styled.img`
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 20px;
 `
 
 interface DashboardCardProps {

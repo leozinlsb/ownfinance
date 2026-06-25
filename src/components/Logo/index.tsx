@@ -12,7 +12,7 @@ const LogoImg = styled.img`
 const LogoContainer = styled.div`
     display: flex;
     align-items: center;
-    margin-left: 20px;
+    margin-left: 10px;
     height: 100%;
 `
 
