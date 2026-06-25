@@ -15,7 +15,7 @@ const FormsContainer = styled.form`
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-top: 20px;ss
+    margin-top: 20px;
 `
 const InputGroup = styled.div`
     display: flex;
@@ -44,6 +44,38 @@ const StyledSelect = styled.select`
     width: 100%;
 `
 
+const RadioContainer = styled.div`
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+`
+
+const RadioOption = styled.div`
+    display: flex; 
+    gap: 6px;
+    align-items: center;
+`
+
+const GroupTitle = styled.p`
+    font-weight: bold;
+`
+
+const StyledLabel = styled.label`
+    font-weight: bold;
+`
+
+const SubmitButton = styled.button`
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    &:hover {
+        background-color: #007bff;
+        color: white;
+    }
+`
+
 function TransactionForms() {
     return (
         <FormCard>
@@ -51,21 +83,21 @@ function TransactionForms() {
             <FormsContainer>
                 <FormRow>
                     <InputGroup>
-                        <label htmlFor="description">Descrição</label>
+                        <StyledLabel htmlFor="description">Descrição</StyledLabel>
                         <StyledInput type="text" id="description" name="description" placeholder="Digite aqui" />
                     </InputGroup>
                     <InputGroup>
-                        <label htmlFor="value">Valor</label>
+                        <StyledLabel htmlFor="value">Valor</StyledLabel>
                         <StyledInput type="number" id="value" name="value" placeholder="Digite o valor" />
                     </InputGroup>
                 </FormRow>
                 <FormRow>
                     <InputGroup>
-                        <label htmlFor="date">Data</label>
+                        <StyledLabel htmlFor="date">Data</StyledLabel>
                         <StyledInput type="date" id="date" name="date" placeholder="Digite a data" />
                     </InputGroup>
                     <InputGroup>
-                        <label htmlFor="category">Categoria</label>
+                        <StyledLabel htmlFor="category">Categoria</StyledLabel>
                         <StyledSelect id="category" name="category">
                             <option value="">Escolha a categoria</option>
                             <option value="alimentacao">Alimentação</option>
@@ -78,6 +110,20 @@ function TransactionForms() {
                         </StyledSelect>
                     </InputGroup>
                 </FormRow>
+                <InputGroup>
+                    <GroupTitle>Tipo de transação</GroupTitle>
+                    <RadioContainer >
+                        <RadioOption>
+                            <input type="radio" id="receita" name="transactionType" value="receita" />
+                            <label htmlFor="receita">Receita</label>
+                        </RadioOption>
+                        <RadioOption>
+                            <input type="radio" id="despesa" name="transactionType" value="despesa" />
+                            <label htmlFor="despesa">Despesa</label>
+                        </RadioOption>
+                    </RadioContainer>
+                </InputGroup>
+                <SubmitButton type="submit">Adicionar Transação</SubmitButton>
             </FormsContainer>
         </FormCard>
     )
