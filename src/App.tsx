@@ -5,6 +5,7 @@ import IncomeIcon from './assets/entrada.svg';
 import OutcomeIcon from './assets/saida.svg';
 import BalanceIcon from './assets/saldo.svg';
 import TransactionForms from "./components/TransactionForms";
+import TransactionHistory from "./components/TransactionHistory";
 
 const AppContainer = styled.div`
     height: 100vh;
@@ -35,6 +36,7 @@ function App() {
       </DashSection>
       <TransactionsSection>
         <TransactionForms />
+        <TransactionHistory />
       </TransactionsSection>
     </AppContainer>
   )

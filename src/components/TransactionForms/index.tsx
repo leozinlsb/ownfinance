@@ -1,16 +1,7 @@
 import styled from "styled-components";
 import { Title } from "../Title";
+import { FormCard } from "../FormCard"
 
-
-const FormCard = styled.div`
-    background-color: white;
-    padding: 30px;
-    flex: 1;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: block;
-    margin: 20px;
-`
 const FormsContainer = styled.form`
     display: flex;
     flex-direction: column;
