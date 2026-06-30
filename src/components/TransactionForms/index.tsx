@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Title } from "../Title";
 import { FormCard } from "../FormCard"
+import { useState } from "react";
 
 const FormsContainer = styled.form`
     display: flex;
@@ -68,6 +69,28 @@ const SubmitButton = styled.button`
 `
 
 function TransactionForms() {
+
+    //formatting monetary values
+    const [amount, setAmount] = useState("");
+
+    const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let rawValue = event.target.value.replace(/\D/g, "");
+
+        if (!rawValue) {
+            setAmount("");
+            return;
+        }
+
+        const numberValue = Number(rawValue) / 100;
+
+        const formattedValue = new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        }).format(numberValue);
+
+        setAmount(formattedValue);
+    };
+
     return (
         <FormCard>
             <Title>ADICIONAR NOVA TRANSAÇÃO</Title>
@@ -75,11 +98,11 @@ function TransactionForms() {
                 <FormRow>
                     <InputGroup>
                         <StyledLabel htmlFor="description">Descrição</StyledLabel>
-                        <StyledInput type="text" id="description" name="description" placeholder="Digite aqui" />
+                        <StyledInput type="text" id="description" name="description" placeholder="Digite" />
                     </InputGroup>
                     <InputGroup>
                         <StyledLabel htmlFor="value">Valor</StyledLabel>
-                        <StyledInput type="number" id="value" name="value" placeholder="Digite o valor" />
+                        <StyledInput type="text" id="value" name="value" placeholder="R$ 0,00" value={amount} onChange={handleAmountChange} />
                     </InputGroup>
                 </FormRow>
                 <FormRow>
@@ -97,6 +120,8 @@ function TransactionForms() {
                             <option value="lazer">Lazer</option>
                             <option value="saude">Saúde</option>
                             <option value="educacao">Educação</option>
+                            <option value="entretenimento">Entretenimento</option>
+                            <option value="salario">Salário</option>
                             <option value="outros">Outros</option>
                         </StyledSelect>
                     </InputGroup>

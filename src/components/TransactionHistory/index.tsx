@@ -60,8 +60,6 @@ function TransactionHistory() {
                             <StyledData>29/06/2026</StyledData>
                             <StyledData>Entretenimento</StyledData>
                         </TableRow>
-                    </TableBody>
-                    <TableBody>
                         <TableRow>
                             <StyledData>OwnFinance</StyledData>
                             <StyledData>5.000</StyledData>
