@@ -31,8 +31,8 @@ function App() {
       <Header />
       <DashSection>
         <DashboardCard title="ENTRADAS" value="R$ 1.250,00" icon={IncomeIcon} />
-        <DashboardCard title="SAÍDAS" value="R$ 1.250,00" icon={OutcomeIcon} />
-        <DashboardCard title="SALDO" value="R$ 1.250,00" icon={BalanceIcon} />
+        <DashboardCard title="SAÍDAS" value="R$ 250,00" icon={OutcomeIcon} />
+        <DashboardCard title="SALDO" value="R$ 1.000,00" icon={BalanceIcon} />
       </DashSection>
       <TransactionsSection>
         <TransactionForms />

@@ -55,14 +55,14 @@ function TransactionHistory() {
                     <TableBody>
                         <TableRow>
                             <StyledData>GTA VI</StyledData>
-                            <StyledData>550</StyledData>
+                            <StyledData>R$ 250,00</StyledData>
                             <StyledData>Saída</StyledData>
                             <StyledData>29/06/2026</StyledData>
                             <StyledData>Entretenimento</StyledData>
                         </TableRow>
                         <TableRow>
                             <StyledData>OwnFinance</StyledData>
-                            <StyledData>5.000</StyledData>
+                            <StyledData>R$ 1.250,00</StyledData>
                             <StyledData>Entrada</StyledData>
                             <StyledData>30/06/2026</StyledData>
                             <StyledData>Salário</StyledData>

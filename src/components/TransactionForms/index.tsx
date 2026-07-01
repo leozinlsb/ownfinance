@@ -70,6 +70,13 @@ const SubmitButton = styled.button`
 
 function TransactionForms() {
 
+    //Apllying the function preventDefault
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        console.log("triggered function");
+    }
+
     //formatting monetary values
     const [amount, setAmount] = useState("");
 
@@ -94,7 +101,7 @@ function TransactionForms() {
     return (
         <FormCard>
             <Title>ADICIONAR NOVA TRANSAÇÃO</Title>
-            <FormsContainer>
+            <FormsContainer onSubmit={handleSubmit}>
                 <FormRow>
                     <InputGroup>
                         <StyledLabel htmlFor="description">Descrição</StyledLabel>
