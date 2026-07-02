@@ -35,9 +35,20 @@ const TableRow = styled.tr`
 const TableBody = styled.tbody``
 
 
+export interface Transaction {
+    id?: number; //id didnt go to the Database, so it doesnt have an id yet
+    description: string;
+    amount: number;
+    type: string;
+    date: string;
+    category: string;
+}
 
+interface TransactionHistoryProps {
+    transactions: Transaction[];
+}
 
-function TransactionHistory() {
+function TransactionHistory({transactions}: TransactionHistoryProps) {
     return (
         <FormCard>
             <Title>ÚLTIMAS TRANSAÇÕES</Title>
@@ -53,20 +64,15 @@ function TransactionHistory() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        <TableRow>
-                            <StyledData>GTA VI</StyledData>
-                            <StyledData>R$ 250,00</StyledData>
-                            <StyledData>Saída</StyledData>
-                            <StyledData>29/06/2026</StyledData>
-                            <StyledData>Entretenimento</StyledData>
-                        </TableRow>
-                        <TableRow>
-                            <StyledData>OwnFinance</StyledData>
-                            <StyledData>R$ 1.250,00</StyledData>
-                            <StyledData>Entrada</StyledData>
-                            <StyledData>30/06/2026</StyledData>
-                            <StyledData>Salário</StyledData>
-                        </TableRow>
+                        {transactions.map((transaction) => (
+                            <TableRow key={transaction.id}>
+                                <StyledData>{transaction.description}</StyledData>
+                                <StyledData>R${transaction.amount}</StyledData>
+                                <StyledData>{transaction.type}</StyledData>
+                                <StyledData>{transaction.date}</StyledData>
+                                <StyledData>{transaction.category}</StyledData>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </StyledTable>
             </TableContainer>

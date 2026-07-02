@@ -32,8 +32,7 @@ function App() {
   useEffect(() => {
     fetch("http://localhost:8080/transactions")
       .then(response => response.json())
-      .then(data => setTransactions(data)
-      )
+      .then(data => setTransactions(data))
       .catch(error => console.error("Erro ao buscar transações: ", error));
   }, []);
 
@@ -47,7 +46,7 @@ function App() {
       </DashSection>
       <TransactionsSection>
         <TransactionForms />
-        <TransactionHistory />
+        <TransactionHistory transactions={transactions} />
       </TransactionsSection>
     </AppContainer>
   )
