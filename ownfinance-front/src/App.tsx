@@ -6,6 +6,7 @@ import OutcomeIcon from './assets/saida.svg';
 import BalanceIcon from './assets/saldo.svg';
 import TransactionForms from "./components/TransactionForms";
 import TransactionHistory from "./components/TransactionHistory";
+import { useState, useEffect } from "react";
 
 const AppContainer = styled.div`
     height: 100vh;
@@ -26,6 +27,16 @@ const TransactionsSection = styled.section`
 `
 
 function App() {
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/transactions")
+      .then(response => response.json())
+      .then(data => setTransactions(data)
+      )
+      .catch(error => console.error("Erro ao buscar transações: ", error));
+  }, []);
+
   return (
     <AppContainer>
       <Header />
