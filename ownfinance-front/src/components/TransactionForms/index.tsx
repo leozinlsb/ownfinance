@@ -70,11 +70,39 @@ const SubmitButton = styled.button`
 
 function TransactionForms() {
 
-    //Apllying the function preventDefault
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        // preventDefault stops the page from reloading when the form is submitted
         event.preventDefault();
 
-        console.log("triggered function");
+        const formData = new FormData(event.currentTarget);
+
+        //Creating the transaction object to send it to the backend
+        const newTransaction = {
+            amount: Number(amount.replace(/\D/g, "")) / 100,
+            description: formData.get("description") as string,
+            date: formData.get("date") as string,
+            category: formData.get("category") as string,
+            type: formData.get("transactionType") as string,
+        };
+
+        fetch("http://localhost:8080/transactions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newTransaction),
+        })
+            .then(response => {
+                if(!response.ok){
+                    throw new Error(`O servidor recusou a requisição! Status : ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(savedTransaction => {
+                console.log("Salvo no banco do Java com sucesso: ", savedTransaction)
+                alert("Transação cadastrada com sucesso!");
+            })
+            .catch(error => console.error("Erro ao salvar: ", error));
     }
 
     //formatting monetary values
