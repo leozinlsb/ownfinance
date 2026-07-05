@@ -24,4 +24,9 @@ public class TransactionController {
     public Transaction save(@RequestBody Transaction transaction) {
         return repository.save(transaction);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
+        repository.deleteById(id);
+    }
 }

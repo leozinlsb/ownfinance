@@ -42,6 +42,19 @@ function App() {
     setTransactions(prevTransactions => [...prevTransactions, newTransaction]);
   };
 
+  const handleDeleteTransaction = (id: number) => {
+    fetch(`http://localhost:8080/transactions/${id}`, {
+      method: "DELETE",
+    })
+    .then(response => {
+      if (!response.ok){
+        throw new Error("Erro ao excluir no servidor");
+      }
+      setTransactions(prev => prev.filter(t => t.id !== id));
+    })
+    .catch(error => console.error("Erro ao excluir transação: ", error));
+  };
+
   const income = transactions.filter(t => t.type == "receita")
     .reduce((acc, t) => acc + Number(t.amount), 0);
 
@@ -68,7 +81,7 @@ function App() {
       </DashSection>
       <TransactionsSection>
         <TransactionForms onAddTransaction={handleAddTransaction} />
-        <TransactionHistory transactions={transactions} />
+        <TransactionHistory transactions={transactions} onDeleteTransaction= {handleDeleteTransaction}/>
       </TransactionsSection>
     </AppContainer>
   )
