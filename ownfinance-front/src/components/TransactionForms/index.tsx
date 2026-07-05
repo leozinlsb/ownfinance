@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Title } from "../Title";
 import { FormCard } from "../FormCard"
 import { useState } from "react";
+import type { Transaction } from "../TransactionHistory"
 
 const FormsContainer = styled.form`
     display: flex;
@@ -67,10 +68,14 @@ const SubmitButton = styled.button`
         color: white;
     }
 `
+// Interface used to communicate with parent component
+interface TransactionFormsProps {
+    onAddTransaction: (newTransaction: Transaction) => void;
+}
 
-function TransactionForms() {
+function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
         // preventDefault stops the page from reloading when the form is submitted
         event.preventDefault();
 
@@ -93,14 +98,14 @@ function TransactionForms() {
             body: JSON.stringify(newTransaction),
         })
             .then(response => {
-                if(!response.ok){
+                if (!response.ok) {
                     throw new Error(`O servidor recusou a requisição! Status : ${response.status}`);
                 }
                 return response.json();
             })
             .then(savedTransaction => {
                 console.log("Salvo no banco do Java com sucesso: ", savedTransaction)
-                alert("Transação cadastrada com sucesso!");
+                onAddTransaction(savedTransaction);
             })
             .catch(error => console.error("Erro ao salvar: ", error));
     }
@@ -109,7 +114,7 @@ function TransactionForms() {
     const [amount, setAmount] = useState("");
 
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let rawValue = event.target.value.replace(/\D/g, "");
+        const rawValue = event.target.value.replace(/\D/g, "");
 
         if (!rawValue) {
             setAmount("");

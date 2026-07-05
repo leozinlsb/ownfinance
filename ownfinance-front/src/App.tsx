@@ -7,6 +7,7 @@ import BalanceIcon from './assets/saldo.svg';
 import TransactionForms from "./components/TransactionForms";
 import TransactionHistory from "./components/TransactionHistory";
 import { useState, useEffect } from "react";
+import type { Transaction } from "./components/TransactionHistory"
 
 const AppContainer = styled.div`
     height: 100vh;
@@ -27,7 +28,7 @@ const TransactionsSection = styled.section`
 `
 
 function App() {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:8080/transactions")
@@ -35,6 +36,11 @@ function App() {
       .then(data => setTransactions(data))
       .catch(error => console.error("Erro ao buscar transações: ", error));
   }, []);
+
+  //const that handle with the auto-refresh when a new transaction is registered
+  const handleAddTransaction = (newTransaction: Transaction) => {
+    setTransactions(prevTransactions => [...prevTransactions, newTransaction]);
+  };
 
   return (
     <AppContainer>
@@ -45,7 +51,7 @@ function App() {
         <DashboardCard title="SALDO" value="R$ 1.000,00" icon={BalanceIcon} />
       </DashSection>
       <TransactionsSection>
-        <TransactionForms />
+        <TransactionForms onAddTransaction= {handleAddTransaction}/>
         <TransactionHistory transactions={transactions} />
       </TransactionsSection>
     </AppContainer>
