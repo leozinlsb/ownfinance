@@ -42,16 +42,32 @@ function App() {
     setTransactions(prevTransactions => [...prevTransactions, newTransaction]);
   };
 
+  const income = transactions.filter(t => t.type == "receita")
+    .reduce((acc, t) => acc + Number(t.amount), 0);
+
+  const outcome = transactions.filter(t => t.type == "despesa")
+    .reduce((acc, t) => acc + Number(t.amount), 0);
+
+  const total = income - outcome;
+
+  //function that format the numbers on the Dashboard cards
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    }).format(value);
+  };
+
   return (
     <AppContainer>
       <Header />
       <DashSection>
-        <DashboardCard title="ENTRADAS" value="R$ 1.250,00" icon={IncomeIcon} />
-        <DashboardCard title="SAÍDAS" value="R$ 250,00" icon={OutcomeIcon} />
-        <DashboardCard title="SALDO" value="R$ 1.000,00" icon={BalanceIcon} />
+        <DashboardCard title="ENTRADAS" value={formatCurrency(income)} icon={IncomeIcon} />
+        <DashboardCard title="SAÍDAS" value={formatCurrency(outcome)} icon={OutcomeIcon} />
+        <DashboardCard title="SALDO" value={formatCurrency(total)} icon={BalanceIcon} />
       </DashSection>
       <TransactionsSection>
-        <TransactionForms onAddTransaction= {handleAddTransaction}/>
+        <TransactionForms onAddTransaction={handleAddTransaction} />
         <TransactionHistory transactions={transactions} />
       </TransactionsSection>
     </AppContainer>
