@@ -34,7 +34,14 @@ const DeleteButton = styled.button`
     &:hover {
         transform: scale(1.25);
     }
-`;
+`
+
+const EmptyState = styled.div`
+    text-align: center;
+    padding: 40px 20px;
+    color: #777;
+    font-size: 1.1rem;
+`
 
 const TableHead = styled.thead``
 
@@ -45,6 +52,16 @@ const TableRow = styled.tr`
     }
 `
 const TableBody = styled.tbody``
+
+interface AmountProps {
+    $type: string;
+}
+
+const AmountData = styled(StyledData) <AmountProps>`
+    font-weight: bold;
+    white-space: nowrap;
+    color: ${props => props.$type === "receita" ? "#2e7d32" : "#d32f2f"};
+`
 
 
 export interface Transaction {
@@ -61,37 +78,45 @@ interface TransactionHistoryProps {
     onDeleteTransaction: (id: number) => void;
 }
 
-function TransactionHistory({transactions, onDeleteTransaction}: TransactionHistoryProps) {
+function TransactionHistory({ transactions, onDeleteTransaction }: TransactionHistoryProps) {
     return (
         <FormCard>
             <Title>ÚLTIMAS TRANSAÇÕES</Title>
             <TableContainer>
-                <StyledTable>
-                    <TableHead>
-                        <TableRow>
-                            <StyledHeader>Descrição</StyledHeader>
-                            <StyledHeader>Valor</StyledHeader>
-                            <StyledHeader>Tipo</StyledHeader>
-                            <StyledHeader>Data</StyledHeader>
-                            <StyledHeader>Categoria</StyledHeader>
-                            <StyledHeader>Ação</StyledHeader>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {transactions.map((transaction) => (
-                            <TableRow key={transaction.id}>
-                                <StyledData>{transaction.description}</StyledData>
-                                <StyledData>R${transaction.amount}</StyledData>
-                                <StyledData>{transaction.type}</StyledData>
-                                <StyledData>{transaction.date}</StyledData>
-                                <StyledData>{transaction.category}</StyledData>
-                                <StyledData>
-                                    <DeleteButton onClick={() => transaction.id && onDeleteTransaction(transaction.id)}><img src= {DeleteIcon} style={{ width: "40px", height: "40px"}} alt="Excluir"/></DeleteButton>
-                                </StyledData>
+                {transactions.length === 0 ? (
+                    <EmptyState>
+                        Nenhuma transação cadastrada ainda
+                    </EmptyState>
+                ) : (
+                    <StyledTable>
+                        <TableHead>
+                            <TableRow>
+                                <StyledHeader>Descrição</StyledHeader>
+                                <StyledHeader>Valor</StyledHeader>
+                                <StyledHeader>Tipo</StyledHeader>
+                                <StyledHeader>Data</StyledHeader>
+                                <StyledHeader>Categoria</StyledHeader>
+                                <StyledHeader>Ação</StyledHeader>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </StyledTable>
+                        </TableHead>
+                        <TableBody>
+                            {transactions.map((transaction) => (
+                                <TableRow key={transaction.id}>
+                                    <StyledData>{transaction.description}</StyledData>
+                                    <AmountData $type={transaction.type}>{transaction.type === "receita" ? "+" : "-"}
+                                        {new Intl.NumberFormat("pt-BR", {style: "currency", currency: "BRL"}).format(Number(transaction.amount))}
+                                    </AmountData>
+                                    <StyledData>{transaction.type}</StyledData>
+                                    <StyledData>{transaction.date}</StyledData>
+                                    <StyledData>{transaction.category}</StyledData>
+                                    <StyledData>
+                                        <DeleteButton onClick={() => transaction.id && onDeleteTransaction(transaction.id)}><img src={DeleteIcon} style={{ width: "40px", height: "40px" }} alt="Excluir" /></DeleteButton>
+                                    </StyledData>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </StyledTable>
+                )}
             </TableContainer>
         </FormCard>
     )
