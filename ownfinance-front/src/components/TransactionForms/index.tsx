@@ -88,6 +88,8 @@ function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
             date: formData.get("date") as string,
             category: formData.get("category") as string,
             type: formData.get("transactionType") as string,
+            paymentMethod: formData.get("paymentMethod") as string,
+            totalInstallment: Number(formData.get("totalInstallment"))
         };
 
         fetch("http://localhost:8080/transactions", {
@@ -131,6 +133,9 @@ function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
         setAmount(formattedValue);
     };
 
+    const [paymentMethod, setPaymentMethod] = useState("");
+    const [transactionType, setTransactionType] = useState("");
+
     return (
         <FormCard>
             <Title>ADICIONAR NOVA TRANSAÇÃO</Title>
@@ -138,21 +143,21 @@ function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
                 <FormRow>
                     <InputGroup>
                         <StyledLabel htmlFor="description">Descrição</StyledLabel>
-                        <StyledInput type="text" id="description" name="description" placeholder="Digite" />
+                        <StyledInput type="text" id="description" name="description" placeholder="Digite" required/>
                     </InputGroup>
                     <InputGroup>
                         <StyledLabel htmlFor="value">Valor</StyledLabel>
-                        <StyledInput type="text" id="value" name="value" placeholder="R$ 0,00" value={amount} onChange={handleAmountChange} />
+                        <StyledInput type="text" id="value" name="value" placeholder="R$ 0,00" value={amount} onChange={handleAmountChange} required/>
                     </InputGroup>
                 </FormRow>
                 <FormRow>
                     <InputGroup>
                         <StyledLabel htmlFor="date">Data</StyledLabel>
-                        <StyledInput type="date" id="date" name="date" placeholder="Digite a data" />
+                        <StyledInput type="date" id="date" name="date" placeholder="Digite a data" required/>
                     </InputGroup>
                     <InputGroup>
                         <StyledLabel htmlFor="category">Categoria</StyledLabel>
-                        <StyledSelect id="category" name="category">
+                        <StyledSelect id="category" name="category" required>
                             <option value="">Escolha a categoria</option>
                             <option value="alimentacao">Alimentação</option>
                             <option value="transporte">Transporte</option>
@@ -170,15 +175,41 @@ function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
                     <GroupTitle>Tipo de transação</GroupTitle>
                     <RadioContainer >
                         <RadioOption>
-                            <input type="radio" id="receita" name="transactionType" value="receita" />
+                            <input type="radio" id="receita" name="transactionType" value="receita" checked={transactionType === "receita"} onChange={(event) => setTransactionType(event.target.value)} required/>
                             <label htmlFor="receita">Receita</label>
                         </RadioOption>
                         <RadioOption>
-                            <input type="radio" id="despesa" name="transactionType" value="despesa" />
+                            <input type="radio" id="despesa" name="transactionType" value="despesa" checked={transactionType === "despesa"} onChange={(event) => setTransactionType(event.target.value)} required/>
                             <label htmlFor="despesa">Despesa</label>
                         </RadioOption>
                     </RadioContainer>
                 </InputGroup>
+                {transactionType === "despesa" && (
+                    <>
+                        <InputGroup>
+                            <StyledLabel htmlFor="paymentMethod">Método de Pagamento</StyledLabel>
+                            <StyledSelect 
+                                id="paymentMethod" 
+                                name="paymentMethod"
+                                value={paymentMethod}
+                                onChange={(event) => setPaymentMethod(event.target.value)}
+                            >
+                                <option value="">Escolha o método</option>
+                                <option value="dinheiro">Dinheiro</option>
+                                <option value="pix">Pix</option>
+                                <option value="credito">Crédito</option>
+                                <option value="debito">Débito</option>
+                            </StyledSelect>
+                        </InputGroup>
+                        {paymentMethod === "credito" && (
+                            <InputGroup>
+                                <StyledLabel htmlFor="totalInstallments">Em quantas parcelas?</StyledLabel>
+                                <StyledInput type="number" id="totalInstallments" name="totalInstallments" placeholder="Ex: 10" min="1" max="48" />
+                            </InputGroup>
+                        )}
+                    </>
+                )}
+                
                 <SubmitButton type="submit">Adicionar Transação</SubmitButton>
             </FormsContainer>
         </FormCard>

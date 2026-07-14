@@ -71,6 +71,9 @@ export interface Transaction {
     type: string;
     date: string;
     category: string;
+    paymentMethod: string;
+    totalInstallments: number;
+    installmentNumber: number;
 }
 
 interface TransactionHistoryProps {

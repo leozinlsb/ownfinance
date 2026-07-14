@@ -23,10 +23,10 @@ public class TransactionController {
 
     @PostMapping
     public Transaction save(@RequestBody Transaction transaction) {
-        if (transaction.getTotalIntallments() != null &&  transaction.getTotalIntallments() > 1) { // a single payment means paying in full
+        if (transaction.getTotalInstallments() != null &&  transaction.getTotalInstallments() > 1) { // a single payment means paying in full
             LocalDate initialDate = LocalDate.parse(transaction.getDate()); // parse the string date to a calendar object from Java
 
-            for (int i = 0; i < transaction.getTotalIntallments(); i++) {
+            for (int i = 0; i < transaction.getTotalInstallments(); i++) {
                 Transaction installment = new Transaction();
                 installment.setDescription(transaction.getDescription());
                 installment.setCategory(transaction.getCategory());
@@ -34,7 +34,7 @@ public class TransactionController {
                 installment.setType(transaction.getType());
 
                 installment.setInstallmentNumber(i + 1);
-                installment.setTotalIntallments(transaction.getTotalIntallments());
+                installment.setTotalInstallments(transaction.getTotalInstallments());
 
                 installment.setDate(initialDate.plusMonths(i).toString());
 
@@ -43,7 +43,7 @@ public class TransactionController {
             return transaction; //we revert the original response to React so it knows it worked
         } else {
             if (transaction.getInstallmentNumber() == null) transaction.setInstallmentNumber(1);
-            if (transaction.getTotalIntallments() == null) transaction.setTotalIntallments(1);
+            if (transaction.getTotalInstallments() == null) transaction.setTotalInstallments(1);
 
             return repository.save(transaction);
         }

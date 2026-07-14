@@ -32,7 +32,7 @@ public class Transaction {
 
     private Integer installmentNumber;
 
-    private Integer totalIntallments;
+    private Integer totalInstallments;
 
     private String date;
 
