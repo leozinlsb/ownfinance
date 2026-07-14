@@ -28,6 +28,12 @@ public class Transaction {
 
     private double amount;
 
+    private String paymentMethod;
+
+    private Integer installmentNumber;
+
+    private Integer totalIntallments;
+
     private String date;
 
     private String type;
