@@ -70,7 +70,7 @@ const SubmitButton = styled.button`
 `
 // Interface used to communicate with parent component
 interface TransactionFormsProps {
-    onAddTransaction: (newTransaction: Transaction) => void;
+    onAddTransaction: (newTransaction: Transaction[]) => void;
 }
 
 function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
@@ -89,7 +89,7 @@ function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
             category: formData.get("category") as string,
             type: formData.get("transactionType") as string,
             paymentMethod: formData.get("paymentMethod") as string,
-            totalInstallment: Number(formData.get("totalInstallment"))
+            totalInstallments: Number(formData.get("totalInstallments"))
         };
 
         fetch("http://localhost:8080/transactions", {
@@ -105,9 +105,9 @@ function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
                 }
                 return response.json();
             })
-            .then(savedTransaction => {
-                console.log("Salvo no banco do Java com sucesso: ", savedTransaction)
-                onAddTransaction(savedTransaction);
+            .then(savedTransactions => {
+                console.log("Salvo no banco do Java com sucesso: ", savedTransactions)
+                onAddTransaction(savedTransactions);
             })
             .catch(error => console.error("Erro ao salvar: ", error));
     }

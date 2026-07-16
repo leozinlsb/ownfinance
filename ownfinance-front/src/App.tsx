@@ -6,8 +6,10 @@ import OutcomeIcon from './assets/saida.svg';
 import BalanceIcon from './assets/saldo.svg';
 import TransactionForms from "./components/TransactionForms";
 import TransactionHistory from "./components/TransactionHistory";
+import ExpenseChart from "./components/ExpenseChart/index.tsx";
 import { useState, useEffect } from "react";
 import type { Transaction } from "./components/TransactionHistory"
+import { formatCurrency } from "./utils/formatCurrency.tsx"; //function that format the value to BRL
 
 const AppContainer = styled.div`
     height: 100vh;
@@ -38,8 +40,8 @@ function App() {
   }, []);
 
   //const that handle with the auto-refresh when a new transaction is registered
-  const handleAddTransaction = (newTransaction: Transaction) => {
-    setTransactions(prevTransactions => [...prevTransactions, newTransaction]);
+  const handleAddTransaction = (newTransaction: Transaction[]) => {
+    setTransactions(prevTransactions => [...prevTransactions, ...newTransaction]);
   };
 
   const handleDeleteTransaction = (id: number) => {
@@ -63,14 +65,6 @@ function App() {
 
   const total = income - outcome;
 
-  //function that format the numbers on the Dashboard cards
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL"
-    }).format(value);
-  };
-
   return (
     <AppContainer>
       <Header />
@@ -80,7 +74,10 @@ function App() {
         <DashboardCard title="SALDO" value={formatCurrency(total)} icon={BalanceIcon} />
       </DashSection>
       <TransactionsSection>
-        <TransactionForms onAddTransaction={handleAddTransaction} />
+        <div> 
+          <TransactionForms onAddTransaction={handleAddTransaction} />
+          <ExpenseChart transactions={transactions} />
+        </div>
         <TransactionHistory transactions={transactions} onDeleteTransaction= {handleDeleteTransaction}/>
       </TransactionsSection>
     </AppContainer>
