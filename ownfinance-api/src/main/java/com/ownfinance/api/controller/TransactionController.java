@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ArrayList;
 
 @CrossOrigin
 @RestController
@@ -22,7 +23,10 @@ public class TransactionController {
     }
 
     @PostMapping
-    public Transaction save(@RequestBody Transaction transaction) {
+    public List<Transaction> save(@RequestBody Transaction transaction) {
+
+        List<Transaction> savedList = new ArrayList<>();
+
         if (transaction.getTotalInstallments() != null &&  transaction.getTotalInstallments() > 1) { // a single payment means paying in full
             LocalDate initialDate = LocalDate.parse(transaction.getDate()); // parse the string date to a calendar object from Java
 
@@ -38,14 +42,18 @@ public class TransactionController {
 
                 installment.setDate(initialDate.plusMonths(i).toString());
 
-                repository.save(installment);
+                Transaction savedInstallment = repository.save(installment);
+                savedList.add(savedInstallment);
             }
-            return transaction; //we revert the original response to React so it knows it worked
+            return savedList; //we return the list with all saved installments
         } else {
             if (transaction.getInstallmentNumber() == null) transaction.setInstallmentNumber(1);
             if (transaction.getTotalInstallments() == null) transaction.setTotalInstallments(1);
 
-            return repository.save(transaction);
+            Transaction savedSingle = repository.save(transaction);
+            savedList.add(savedSingle);
+
+            return savedList;
         }
 
 
