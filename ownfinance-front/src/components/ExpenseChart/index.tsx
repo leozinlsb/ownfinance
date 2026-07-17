@@ -1,7 +1,7 @@
 import type { Transaction } from "../TransactionHistory";
 import { FormCard } from "../FormCard";
 import { Title } from "../Title";
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts";
+import { PieChart, Pie, ResponsiveContainer, Legend, Tooltip } from "recharts";
 import { formatCurrency } from "../../utils/formatCurrency";
 import styled from "styled-components";
 
@@ -51,9 +51,10 @@ function ExpenseChart({ transactions }: ExpenseChartProps) {
         return acc;
     }, {} as Record<string, number>); //we say to TS that acc is an object {string: number}
 
-    const chartData = Object.keys(expensesByCategory).map(categoryName => ({
+    const chartData = Object.keys(expensesByCategory).map((categoryName, index) => ({
         name: categoryName,
-        value: expensesByCategory[categoryName]
+        value: expensesByCategory[categoryName],
+        fill: COLORS[index % COLORS.length]
     }));
 
     return (
@@ -72,11 +73,7 @@ function ExpenseChart({ transactions }: ExpenseChartProps) {
                         dataKey="value"
                         nameKey="name"
                        {...PIE_CONFIG}
-                        >
-                            {chartData.map((_, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                        </Pie>
+                        />
                         <Tooltip formatter={(value) => formatCurrency(Number(value))}/>
                         <Legend/>
                     </PieChart>
