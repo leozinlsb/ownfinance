@@ -2,10 +2,19 @@ import styled from "styled-components";
 import DeleteIcon from '../../assets/deleteimg.svg'
 import { Title } from "../Title";
 import { FormCard } from "../FormCard"
+import { formatDateBR } from "../../utils/formatDateBR";
+import { StyledSelect } from "../../components/FormElements";
 
 const TableContainer = styled.div`
     margin-top: 20px;
     overflow-x: auto;
+`
+const SelectContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
 `
 
 const StyledTable = styled.table`
@@ -79,12 +88,39 @@ export interface Transaction {
 interface TransactionHistoryProps {
     transactions: Transaction[];
     onDeleteTransaction: (id: number) => void;
+    selectedMonth: string;
+    onMonthChange: (month: string) => void;
+    selectedYear: string;
+    onYearChange: (year: string) => void;
 }
 
-function TransactionHistory({ transactions, onDeleteTransaction }: TransactionHistoryProps) {
+function TransactionHistory({ transactions, onDeleteTransaction, selectedMonth, onMonthChange, selectedYear, onYearChange }: TransactionHistoryProps) {
     return (
         <FormCard>
             <Title>ÚLTIMAS TRANSAÇÕES</Title>
+            <SelectContainer>
+                <StyledSelect id="month" name="month" value={selectedMonth} onChange={(e) => onMonthChange(e.target.value)}>
+                    <option value="" disabled selected>Mês</option>
+                    <option value="">Todos os Meses</option>
+                    <option value="01">Janeiro</option>
+                    <option value="02">Fevereiro</option>
+                    <option value="03">Março</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Maio</option>
+                    <option value="06">Junho</option>
+                    <option value="07">Julho</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Setembro</option>
+                    <option value="10">Outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
+                </StyledSelect>
+
+                <StyledSelect id="year" name="year" value={selectedYear} onChange={(e) => onYearChange(e.target.value)}>
+                    <option value="" disabled selected>Ano</option>
+                    <option value="2026">2026</option>
+                </StyledSelect>
+            </SelectContainer>
             <TableContainer>
                 {transactions.length === 0 ? (
                     <EmptyState>
@@ -107,10 +143,10 @@ function TransactionHistory({ transactions, onDeleteTransaction }: TransactionHi
                                 <TableRow key={transaction.id}>
                                     <StyledData>{transaction.description}</StyledData>
                                     <AmountData $type={transaction.type}>{transaction.type === "receita" ? "+" : "-"}
-                                        {new Intl.NumberFormat("pt-BR", {style: "currency", currency: "BRL"}).format(Number(transaction.amount))}
+                                        {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(Number(transaction.amount))}
                                     </AmountData>
                                     <StyledData>{transaction.type}</StyledData>
-                                    <StyledData>{transaction.date}</StyledData>
+                                    <StyledData>{formatDateBR(transaction.date)}</StyledData>
                                     <StyledData>{transaction.category}</StyledData>
                                     <StyledData>
                                         <DeleteButton onClick={() => transaction.id && onDeleteTransaction(transaction.id)}><img src={DeleteIcon} style={{ width: "40px", height: "40px" }} alt="Excluir" /></DeleteButton>

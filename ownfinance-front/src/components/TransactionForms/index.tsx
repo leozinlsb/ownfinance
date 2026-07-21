@@ -3,6 +3,8 @@ import { Title } from "../Title";
 import { FormCard } from "../FormCard"
 import { useState } from "react";
 import type { Transaction } from "../TransactionHistory"
+import { StyledLabel, StyledInput, StyledSelect, SubmitButton, InputGroup } from "../../components/FormElements";
+
 
 const FormsContainer = styled.form`
     display: flex;
@@ -10,30 +12,10 @@ const FormsContainer = styled.form`
     gap: 10px;
     margin-top: 20px;
 `
-const InputGroup = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-`
 
 const FormRow = styled.div`
     display: flex;
     gap: 20px;
-    width: 100%;
-`
-
-const StyledInput = styled.input`
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-`
-
-const StyledSelect = styled.select`
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     width: 100%;
 `
 
@@ -53,21 +35,6 @@ const GroupTitle = styled.p`
     font-weight: bold;
 `
 
-const StyledLabel = styled.label`
-    font-weight: bold;
-`
-
-const SubmitButton = styled.button`
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    cursor: pointer;
-    &:hover {
-        background-color: #007bff;
-        color: white;
-    }
-`
 // Interface used to communicate with parent component
 interface TransactionFormsProps {
     onAddTransaction: (newTransaction: Transaction[]) => void;
