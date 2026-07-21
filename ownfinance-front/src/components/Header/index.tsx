@@ -29,10 +29,30 @@ const UserMenu = styled.div`
     justify-content: flex-end;
 `
 
-function Header() {
+
+interface HeaderContainerProps {
+    activeTab: string;
+    setActiveTab: (activeTab: string) => void;
+}
+
+
+function Header({ activeTab, setActiveTab }: HeaderContainerProps) {
+    const tabs = ['Lancamentos', 'Analises'];
+
     return (
         <HeaderContainer>
             <Logo />
+            <>
+                <div>
+                    {tabs.map(tab => (
+                        <button key={tab} className={activeTab === tab ? 'active' : ''} onClick={() => setActiveTab(tab)}>
+                            {tab}
+                        </button>
+                    ))}
+                </div>
+            </>
+
+            
             <UserMenu>
                 <ProfileContainer src={ProfilePic} alt="Profile Pic" />
                 <p>Username</p>

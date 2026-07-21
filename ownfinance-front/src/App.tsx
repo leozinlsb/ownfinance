@@ -31,11 +31,13 @@ const TransactionsSection = styled.section`
 
 function App() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [selectedMonth, setSelectedMonth] = useState<string>("07");
-  const [selectedYear, setSelectedYear] = useState<string>("2026");
+  const [selectedMonth, setSelectedMonth] = useState<string>("");
+  const [selectedYear, setSelectedYear] = useState<string>("");
+  const [activeTab, setActiveTab] = useState('Lancamentos');
+
 
   console.log("Ano Selecionado:", selectedYear, " | Mês Selecionado:", selectedMonth);
-  console.log("Exemplo de Data do Banco:", transactions[0]?.date);  
+  console.log("Exemplo de Data do Banco:", transactions[0]?.date);
 
 
   const filteredTransactions = transactions.filter(t => {
@@ -60,13 +62,13 @@ function App() {
     fetch(`http://localhost:8080/transactions/${id}`, {
       method: "DELETE",
     })
-    .then(response => {
-      if (!response.ok){
-        throw new Error("Erro ao excluir no servidor");
-      }
-      setTransactions(prev => prev.filter(t => t.id !== id));
-    })
-    .catch(error => console.error("Erro ao excluir transação: ", error));
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Erro ao excluir no servidor");
+        }
+        setTransactions(prev => prev.filter(t => t.id !== id));
+      })
+      .catch(error => console.error("Erro ao excluir transação: ", error));
   };
 
   const income = filteredTransactions
@@ -81,26 +83,36 @@ function App() {
 
   return (
     <AppContainer>
-      <Header />
-      <DashSection>
-        <DashboardCard title="ENTRADAS" value={formatCurrency(income)} icon={IncomeIcon} />
-        <DashboardCard title="SAÍDAS" value={formatCurrency(outcome)} icon={OutcomeIcon} />
-        <DashboardCard title="SALDO" value={formatCurrency(total)} icon={BalanceIcon} />
-      </DashSection>
-      <TransactionsSection>
-        <div> 
-          <TransactionForms onAddTransaction={handleAddTransaction} />
-          <ExpenseChart transactions={filteredTransactions} />
-        </div>
-        <TransactionHistory
-          transactions={filteredTransactions}
-          onDeleteTransaction= {handleDeleteTransaction}
-          selectedMonth={selectedMonth}
-          onMonthChange={setSelectedMonth}
-          selectedYear={selectedYear}
-          onYearChange={setSelectedYear}
-          />
-      </TransactionsSection>
+      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+      {activeTab === 'Lancamentos' && (
+        <>
+          <DashSection>
+            <DashboardCard title="ENTRADAS" value={formatCurrency(income)} icon={IncomeIcon} />
+            <DashboardCard title="SAÍDAS" value={formatCurrency(outcome)} icon={OutcomeIcon} />
+            <DashboardCard title="SALDO" value={formatCurrency(total)} icon={BalanceIcon} />
+          </DashSection>
+          <TransactionsSection>
+            <div>
+              <TransactionForms onAddTransaction={handleAddTransaction} />
+              <ExpenseChart transactions={filteredTransactions} />
+            </div>
+            <TransactionHistory
+              transactions={filteredTransactions}
+              onDeleteTransaction={handleDeleteTransaction}
+              selectedMonth={selectedMonth}
+              onMonthChange={setSelectedMonth}
+              selectedYear={selectedYear}
+              onYearChange={setSelectedYear}
+            />
+          </TransactionsSection>
+        </>
+      )}
+
+      {activeTab === 'Analises' && (
+        <h1>
+          PÁGINA EM CONSTRUÇÃO
+        </h1>
+      )}
     </AppContainer>
   )
 }
