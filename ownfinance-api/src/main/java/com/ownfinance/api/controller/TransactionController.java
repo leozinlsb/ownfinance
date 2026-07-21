@@ -4,6 +4,7 @@ import com.ownfinance.api.model.Transaction;
 import com.ownfinance.api.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.ownfinance.api.dto.AnalyticsDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -62,5 +63,10 @@ public class TransactionController {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         repository.deleteById(id);
+    }
+
+    @GetMapping("/analytics")
+    public List<AnalyticsDTO> getAnalyticsResume() {
+        return repository.getAnalyticsSumary();
     }
 }
