@@ -28,6 +28,33 @@ const UserMenu = styled.div`
     align-items: center;
     justify-content: flex-end;
 `
+const TabsContainer = styled.div`
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+`
+
+const TabButton = styled.button`
+    padding: 12px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px 12px 0 0;
+    transition: all 0.2s ease-in-out;
+    background-color: transparent;
+    color: #ffffff;
+    opacity: 0.6; 
+
+    &.active {
+        background-color: #f4f7f9; 
+        color: #1a3c5a; 
+        opacity: 1; 
+    }
+    &:hover {
+        opacity: 1;
+    }
+`
 
 
 interface HeaderContainerProps {
@@ -43,16 +70,16 @@ function Header({ activeTab, setActiveTab }: HeaderContainerProps) {
         <HeaderContainer>
             <Logo />
             <>
-                <div>
+                <TabsContainer>
                     {tabs.map(tab => (
-                        <button key={tab} className={activeTab === tab ? 'active' : ''} onClick={() => setActiveTab(tab)}>
+                        <TabButton key={tab} className={activeTab === tab ? 'active' : ''} onClick={() => setActiveTab(tab)}>
                             {tab}
-                        </button>
+                        </TabButton>
                     ))}
-                </div>
+                </TabsContainer>
             </>
 
-            
+
             <UserMenu>
                 <ProfileContainer src={ProfilePic} alt="Profile Pic" />
                 <p>Username</p>
