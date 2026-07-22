@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import styled from "styled-components";
 import { useState } from "react";
 import DashboardPage from "./routes/Dashboard";
+import AnalyticsPage from "./routes/Analytics";
 
 
 const AppContainer = styled.div`
@@ -19,9 +20,7 @@ function App() {
       )}
 
       {activeTab === 'Analises' && (
-        <h1>
-          PÁGINA EM CONSTRUÇÃO
-        </h1>
+        <AnalyticsPage />
       )}
     </AppContainer>
   )

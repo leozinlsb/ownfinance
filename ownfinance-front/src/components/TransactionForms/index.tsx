@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Title } from "../Title";
-import { FormCard } from "../FormCard"
+import { Card } from "../Card"
 import { useState } from "react";
 import type { Transaction } from "../TransactionHistory"
 import { StyledLabel, StyledInput, StyledSelect, SubmitButton, InputGroup } from "../../components/FormElements";
@@ -104,23 +104,23 @@ function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
     const [transactionType, setTransactionType] = useState("");
 
     return (
-        <FormCard>
+        <Card>
             <Title>ADICIONAR NOVA TRANSAÇÃO</Title>
             <FormsContainer onSubmit={handleSubmit}>
                 <FormRow>
                     <InputGroup>
                         <StyledLabel htmlFor="description">Descrição</StyledLabel>
-                        <StyledInput type="text" id="description" name="description" placeholder="Digite" required/>
+                        <StyledInput type="text" id="description" name="description" placeholder="Digite" required />
                     </InputGroup>
                     <InputGroup>
                         <StyledLabel htmlFor="value">Valor</StyledLabel>
-                        <StyledInput type="text" id="value" name="value" placeholder="R$ 0,00" value={amount} onChange={handleAmountChange} required/>
+                        <StyledInput type="text" id="value" name="value" placeholder="R$ 0,00" value={amount} onChange={handleAmountChange} required />
                     </InputGroup>
                 </FormRow>
                 <FormRow>
                     <InputGroup>
                         <StyledLabel htmlFor="date">Data</StyledLabel>
-                        <StyledInput type="date" id="date" name="date" placeholder="Digite a data" required/>
+                        <StyledInput type="date" id="date" name="date" placeholder="Digite a data" required />
                     </InputGroup>
                     <InputGroup>
                         <StyledLabel htmlFor="category">Categoria</StyledLabel>
@@ -142,11 +142,11 @@ function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
                     <GroupTitle>Tipo de transação</GroupTitle>
                     <RadioContainer >
                         <RadioOption>
-                            <input type="radio" id="receita" name="transactionType" value="receita" checked={transactionType === "receita"} onChange={(event) => setTransactionType(event.target.value)} required/>
+                            <input type="radio" id="receita" name="transactionType" value="receita" checked={transactionType === "receita"} onChange={(event) => setTransactionType(event.target.value)} required />
                             <label htmlFor="receita">Receita</label>
                         </RadioOption>
                         <RadioOption>
-                            <input type="radio" id="despesa" name="transactionType" value="despesa" checked={transactionType === "despesa"} onChange={(event) => setTransactionType(event.target.value)} required/>
+                            <input type="radio" id="despesa" name="transactionType" value="despesa" checked={transactionType === "despesa"} onChange={(event) => setTransactionType(event.target.value)} required />
                             <label htmlFor="despesa">Despesa</label>
                         </RadioOption>
                     </RadioContainer>
@@ -155,8 +155,8 @@ function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
                     <>
                         <InputGroup>
                             <StyledLabel htmlFor="paymentMethod">Método de Pagamento</StyledLabel>
-                            <StyledSelect 
-                                id="paymentMethod" 
+                            <StyledSelect
+                                id="paymentMethod"
                                 name="paymentMethod"
                                 value={paymentMethod}
                                 onChange={(event) => setPaymentMethod(event.target.value)}
@@ -176,10 +176,10 @@ function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
                         )}
                     </>
                 )}
-                
+
                 <SubmitButton type="submit">Adicionar Transação</SubmitButton>
             </FormsContainer>
-        </FormCard>
+        </Card>
     )
 }
 

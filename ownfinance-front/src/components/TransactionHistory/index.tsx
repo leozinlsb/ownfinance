@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import DeleteIcon from '../../assets/deleteimg.svg'
 import { Title } from "../Title";
-import { FormCard } from "../FormCard"
+import { Card } from "../Card"
 import { formatDateBR } from "../../utils/formatDateBR";
 import { StyledSelect } from "../../components/FormElements";
 
@@ -96,7 +96,7 @@ interface TransactionHistoryProps {
 
 function TransactionHistory({ transactions, onDeleteTransaction, selectedMonth, onMonthChange, selectedYear, onYearChange }: TransactionHistoryProps) {
     return (
-        <FormCard>
+        <Card>
             <Title>ÚLTIMAS TRANSAÇÕES</Title>
             <SelectContainer>
                 <StyledSelect id="month" name="month" value={selectedMonth} onChange={(e) => onMonthChange(e.target.value)}>
@@ -157,7 +157,7 @@ function TransactionHistory({ transactions, onDeleteTransaction, selectedMonth, 
                     </StyledTable>
                 )}
             </TableContainer>
-        </FormCard>
+        </Card>
     )
 }
 

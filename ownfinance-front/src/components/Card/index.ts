@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FormCard = styled.div`
+export const Card = styled.div`
     background-color: white;
     padding: 30px;
     flex: 1;

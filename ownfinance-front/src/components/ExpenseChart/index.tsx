@@ -1,5 +1,5 @@
 import type { Transaction } from "../TransactionHistory";
-import { FormCard } from "../FormCard";
+import { Card } from "../Card";
 import { Title } from "../Title";
 import { PieChart, Pie, ResponsiveContainer, Legend, Tooltip } from "recharts";
 import { formatCurrency } from "../../utils/formatCurrency";
@@ -38,18 +38,18 @@ interface ExpenseChartProps {
 function ExpenseChart({ transactions }: ExpenseChartProps) {
 
     const expensesByCategory = transactions.filter(t => t.type === "despesa")
-    .reduce((acc, t) => {
-        const categoryName = t.category;
-        const amount = Number(t.amount);
-        //if the category doesn't exist in the acc object, we initially create it with 0
-        if(!acc[categoryName]) {
-            acc[categoryName] = 0;
-        }
-        //we sum the transaction value in its respective category
-        acc[categoryName] = acc[categoryName] + amount;
+        .reduce((acc, t) => {
+            const categoryName = t.category;
+            const amount = Number(t.amount);
+            //if the category doesn't exist in the acc object, we initially create it with 0
+            if (!acc[categoryName]) {
+                acc[categoryName] = 0;
+            }
+            //we sum the transaction value in its respective category
+            acc[categoryName] = acc[categoryName] + amount;
 
-        return acc;
-    }, {} as Record<string, number>); //we say to TS that acc is an object {string: number}
+            return acc;
+        }, {} as Record<string, number>); //we say to TS that acc is an object {string: number}
 
     const chartData = Object.keys(expensesByCategory).map((categoryName, index) => ({
         name: categoryName,
@@ -58,7 +58,7 @@ function ExpenseChart({ transactions }: ExpenseChartProps) {
     }));
 
     return (
-        <FormCard>
+        <Card>
             <Title>DESPESAS POR CATEGORIA</Title>
 
             {chartData.length === 0 ? (
@@ -69,18 +69,18 @@ function ExpenseChart({ transactions }: ExpenseChartProps) {
                 <ResponsiveContainer width="100%" height={280}>
                     <PieChart>
                         <Pie
-                        data={chartData}
-                        dataKey="value"
-                        nameKey="name"
-                       {...PIE_CONFIG}
+                            data={chartData}
+                            dataKey="value"
+                            nameKey="name"
+                            {...PIE_CONFIG}
                         />
-                        <Tooltip formatter={(value) => formatCurrency(Number(value))}/>
-                        <Legend/>
+                        <Tooltip formatter={(value) => formatCurrency(Number(value))} />
+                        <Legend />
                     </PieChart>
                 </ResponsiveContainer>
             )
-        }
-        </FormCard>
+            }
+        </Card>
     )
 }
 
