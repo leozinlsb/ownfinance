@@ -11,10 +11,10 @@ public class AnalyticsDTO {
     private String month;
     private double total;
 
-    public AnalyticsDTO(String category, String type, String month, double total) {
+    public AnalyticsDTO(String month, String category, String type, double total) {
+        this.month = month;
         this.category = category;
         this.type = type;
-        this.month = month;
         this.total = total;
     }
 
