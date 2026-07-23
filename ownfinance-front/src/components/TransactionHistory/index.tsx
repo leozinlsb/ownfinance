@@ -4,6 +4,7 @@ import { Title } from "../Title";
 import { Card } from "../Card"
 import { formatDateBR } from "../../utils/formatDateBR";
 import { StyledSelect } from "../../components/FormElements";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 const TableContainer = styled.div`
     margin-top: 20px;
@@ -143,7 +144,7 @@ function TransactionHistory({ transactions, onDeleteTransaction, selectedMonth, 
                                 <TableRow key={transaction.id}>
                                     <StyledData>{transaction.description}</StyledData>
                                     <AmountData $type={transaction.type}>{transaction.type === "receita" ? "+" : "-"}
-                                        {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(Number(transaction.amount))}
+                                        {formatCurrency(transaction.amount)}
                                     </AmountData>
                                     <StyledData>{transaction.type}</StyledData>
                                     <StyledData>{formatDateBR(transaction.date)}</StyledData>
