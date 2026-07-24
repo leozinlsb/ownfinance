@@ -3,6 +3,7 @@ import { Card } from "../../components/Card";
 import { StyledInput, StyledSelect } from "../../components/FormElements"
 import { useState } from "react";
 import IncomeOutcomeChart from "../../components/Analytics/IncomeOutcomeChart";
+import CategoryTrendChart from "../../components/Analytics/CategoryTrendChart";
 import { Title } from "../../components/Title";
 
 const FilterContainer = styled.div`
@@ -72,10 +73,15 @@ function Analytics() {
                         <Title>COMPARATIVO ENTRADA VS SAÍDA</Title>
                         <IncomeOutcomeChart />
                     </Card>
+
+                    <Card>
+                        <Title>EVOLUÇÃO POR CATEGORIA NO TEMPO</Title>
+                        <CategoryTrendChart />
+                    </Card>
                 </LeftColumn>
 
                 <RightColumn>
-
+                    
                 </RightColumn>
             </AnalyticsGrid>
         </div>

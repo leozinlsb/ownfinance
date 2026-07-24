@@ -1,12 +1,7 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { useEffect, useState } from "react";
+import type { AnalyticsData } from "../../types/analytics";
 
-interface AnalyticsData {
-    month: string;
-    total: number;
-    category: string;
-    type: string;
-}
 
 function IncomeOutcomeChart() {
     const [analytics, setAnalytics] = useState<AnalyticsData[]>([])
