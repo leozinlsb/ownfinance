@@ -5,6 +5,7 @@ import { useState } from "react";
 import IncomeOutcomeChart from "../../components/Analytics/IncomeOutcomeChart";
 import CategoryTrendChart from "../../components/Analytics/CategoryTrendChart";
 import { Title } from "../../components/Title";
+import GeneralDistributionChart from "../../components/Analytics/GeneralDistributionChart";
 
 const FilterContainer = styled.div`
     display: flex;
@@ -81,7 +82,10 @@ function Analytics() {
                 </LeftColumn>
 
                 <RightColumn>
-                    
+                    <Card>
+                        <Title>DISTRIBUIÇÃO GERAL</Title>
+                        <GeneralDistributionChart />
+                    </Card>
                 </RightColumn>
             </AnalyticsGrid>
         </div>

@@ -10,7 +10,7 @@ function IncomeOutcomeChart() {
         fetch("http://localhost:8080/transactions/analytics")
         .then(response => response.json())
         .then(data => setAnalytics(data))
-        .catch(error => console.error("Erro ao buscar análises: ", error))
+        .catch(error => console.error("Erro no incomeOutcomeChart: ", error))
     }, []);
 
     const chartData = Object.values(
