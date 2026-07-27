@@ -7,6 +7,7 @@ import CategoryTrendChart from "../../components/Analytics/CategoryTrendChart";
 import { Title } from "../../components/Title";
 import GeneralDistributionChart from "../../components/Analytics/GeneralDistributionChart";
 import { exportToPDF } from "../../utils/exportToPDF";
+import { exportToExcel } from "../../utils/exportToExcel";
 
 const FilterContainer = styled.div`
     display: flex;
@@ -84,6 +85,7 @@ function Analytics() {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [isExportingPDF, setIsExportingPDF] = useState(false);
+    const [isExportingExcel, setIsExportingExcel] = useState(false);
 
     const handleDownloadPDF = async () => {
         try {
@@ -97,6 +99,21 @@ function Analytics() {
             console.error("Erro ao gerar PDF: ", error);
         } finally {
             setIsExportingPDF(false);
+        }
+    };
+
+    const handleDownloadExcel = async () => {
+        try {
+            setIsExportingExcel(true);
+
+            const response = await fetch("http://localhost:8080/transactions");
+            const data = await response.json();
+
+            exportToExcel(data);
+        } catch (error) {
+            console.error("Erro ao gerar Excel: ", error);
+        } finally {
+            setIsExportingExcel(false);
         }
     };
 
@@ -135,8 +152,8 @@ function Analytics() {
                         <ExportButton onClick={handleDownloadPDF} disabled={isExportingPDF}>
                             {isExportingPDF ? "Gerando PDF" : "Baixar Extrato Oficial PDF"}
                         </ExportButton>
-                        <ExportButton>
-                            Baixar Planilha Excel
+                        <ExportButton onClick={handleDownloadExcel} disabled={isExportingExcel}>
+                            {isExportingExcel ? "Gerando Planilha Excel" : "Baixar Planilha Excel"}
                         </ExportButton>
                     </ActionsContainer>
                 </TopBar>
