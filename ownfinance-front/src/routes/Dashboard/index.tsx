@@ -32,7 +32,11 @@ function Dashboard() {
   const filteredTransactions = transactions.filter(t => {
     const [year, month] = t.date.split("-")
 
-    return year === selectedYear && (selectedMonth === "" || month === selectedMonth)
+    const matchesYear = selectedYear === "" || year === selectedYear;
+
+    const matchesMonth = selectedMonth === "" || month === selectedMonth;
+
+    return matchesYear && matchesMonth;
   });
 
   useEffect(() => {

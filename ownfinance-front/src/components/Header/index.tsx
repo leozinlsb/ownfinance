@@ -64,7 +64,7 @@ interface HeaderContainerProps {
 
 
 function Header({ activeTab, setActiveTab }: HeaderContainerProps) {
-    const tabs = ['Lancamentos', 'Analises'];
+    const tabs = ['Lançamentos', 'Análises'];
 
     return (
         <HeaderContainer>

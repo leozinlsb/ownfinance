@@ -10,16 +10,16 @@ const AppContainer = styled.div`
 `
 
 function App() {
-  const [activeTab, setActiveTab] = useState('Lancamentos');
+  const [activeTab, setActiveTab] = useState('Lançamentos');
 
   return (
     <AppContainer>
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
-      {activeTab === 'Lancamentos' && (
+      {activeTab === 'Lançamentos' && (
         <DashboardPage />
       )}
 
-      {activeTab === 'Analises' && (
+      {activeTab === 'Análises' && (
         <AnalyticsPage />
       )}
     </AppContainer>
