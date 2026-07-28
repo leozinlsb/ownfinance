@@ -1,8 +1,7 @@
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Legend } from "recharts";
-import { useEffect, useState } from "react";
-import type { AnalyticsData } from "../../types/analytics";
 import { formatCurrency } from "../../utils/formatCurrency";
 import styled from "styled-components";
+import type {  ChartProps } from "../../types/analytics";
 
 const COLORS = ["#1a3c5a", "#e74c3c", "#2ecc71", "#9b59b6", "#f39c12", "#34495e"];
 
@@ -35,17 +34,9 @@ const LabelStrong = styled.strong`
     font-weight: bold;
 `;
 
-function GeneralDistributionChart() {
-    const [analytics, setAnalytics] = useState<AnalyticsData[]>([]);
+function GeneralDistributionChart({ data }: ChartProps) {
 
-    useEffect(() => {
-        fetch("http://localhost:8080/transactions/analytics")
-        .then(response => response.json())
-        .then(data => setAnalytics(data))
-        .catch(error => console.error("Erro no donut chart: ", error))
-    }, []);
-
-    const expenses = analytics.filter(item => item.type === "despesa");
+    const expenses = data.filter(item => item.type === "despesa");
 
     const totalExpenses = expenses.reduce((acc, item) => acc + item.total, 0);
 

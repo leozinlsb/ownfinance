@@ -4,3 +4,7 @@ export interface AnalyticsData {
     category: string;
     type: string;
 }
+
+export interface ChartProps {
+    data: AnalyticsData[];
+}

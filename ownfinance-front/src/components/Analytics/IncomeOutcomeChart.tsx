@@ -1,22 +1,13 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { useEffect, useState } from "react";
-import type { AnalyticsData } from "../../types/analytics";
+import type {  ChartProps } from "../../types/analytics";
 import { formatMonthBR } from "../../utils/formatMonthBR";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 
-function IncomeOutcomeChart() {
-    const [analytics, setAnalytics] = useState<AnalyticsData[]>([])
-
-    useEffect(() => {
-        fetch("http://localhost:8080/transactions/analytics")
-        .then(response => response.json())
-        .then(data => setAnalytics(data))
-        .catch(error => console.error("Erro no incomeOutcomeChart: ", error))
-    }, []);
+function IncomeOutcomeChart({ data }: ChartProps) {
 
     const chartData = Object.values(
-        analytics.reduce((acc, item) => {
+        data.reduce((acc, item) => {
 
             const month = item.month;
             // if month doesn't exist in our acc, he creates with 0 income and outcome

@@ -1,22 +1,14 @@
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { useState, useEffect } from "react";
 import { formatCurrency } from "../../utils/formatCurrency";
-import type { AnalyticsData } from "../../types/analytics";
 import { formatMonthBR } from "../../utils/formatMonthBR";
+import type {  ChartProps } from "../../types/analytics";
+
 
 const CATEGORY_COLORS = ["#3498db", "#e67e22", "#9b59b6", "#1abc9c", "#f1c40f", "#e74c3c"]
 
-function CategoryTrendChart() {
-     const [analytics, setAnalytics] = useState<AnalyticsData[]>([])
-    
-    useEffect(() => {
-        fetch("http://localhost:8080/transactions/analytics")
-        .then(response => response.json())
-        .then(data => setAnalytics(data))
-        .catch(error => console.error("Erro no categoryTrendChart: ", error))
-    }, []);
+function CategoryTrendChart({ data }: ChartProps) {
 
-    const expenses = analytics.filter(item => item.type === "despesa")
+    const expenses = data.filter(item => item.type === "despesa")
 
     const categories = Array.from(new Set(expenses.map(item => item.category)))
 

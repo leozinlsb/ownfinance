@@ -1,13 +1,16 @@
 import styled from "styled-components";
 import { Card } from "../../components/Card";
 import { StyledInput, StyledSelect } from "../../components/FormElements"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IncomeOutcomeChart from "../../components/Analytics/IncomeOutcomeChart";
 import CategoryTrendChart from "../../components/Analytics/CategoryTrendChart";
 import { Title } from "../../components/Title";
 import GeneralDistributionChart from "../../components/Analytics/GeneralDistributionChart";
 import { exportToPDF } from "../../utils/exportToPDF";
 import { exportToExcel } from "../../utils/exportToExcel";
+import { filterAnalyticsByPeriod } from "../../utils/filterByPeriod";
+import type { Transaction } from "../../components/TransactionHistory";
+import type { AnalyticsData } from "../../types/analytics";
 
 const FilterContainer = styled.div`
     display: flex;
@@ -81,20 +84,31 @@ const ExportButton = styled.button`
 
 
 function Analytics() {
-    const [selectedPeriod, setSelectedPeriod] = useState("6");
+    const [analytics, setAnalytics] = useState<AnalyticsData[]>([]);
+    const [selectedPeriod, setSelectedPeriod] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [isExportingPDF, setIsExportingPDF] = useState(false);
     const [isExportingExcel, setIsExportingExcel] = useState(false);
+
+    useEffect(() => {
+        fetch("http://localhost:8080/transactions/analytics")
+            .then(response => response.json())
+            .then(data => setAnalytics(data));
+    }, []);
+
+    const filteredAnalytics = filterAnalyticsByPeriod(analytics, selectedPeriod, startDate, endDate);
 
     const handleDownloadPDF = async () => {
         try {
             setIsExportingPDF(true);
 
             const response = await fetch("http://localhost:8080/transactions");
-            const data = await response.json();
+            const data: Transaction[] = await response.json();
 
-            exportToPDF(data);
+            const filteredData = filterAnalyticsByPeriod(data, selectedPeriod, startDate, endDate);
+
+            exportToPDF(filteredData);
         } catch (error) {
             console.error("Erro ao gerar PDF: ", error);
         } finally {
@@ -107,9 +121,11 @@ function Analytics() {
             setIsExportingExcel(true);
 
             const response = await fetch("http://localhost:8080/transactions");
-            const data = await response.json();
+            const data: Transaction[] = await response.json();
 
-            exportToExcel(data);
+            const filteredData = filterAnalyticsByPeriod(data, selectedPeriod, startDate, endDate);
+
+            exportToExcel(filteredData);
         } catch (error) {
             console.error("Erro ao gerar Excel: ", error);
         } finally {
@@ -163,19 +179,19 @@ function Analytics() {
                 <LeftColumn>
                     <Card>
                         <Title>COMPARATIVO ENTRADA VS SAÍDA</Title>
-                        <IncomeOutcomeChart />
+                        <IncomeOutcomeChart data={filteredAnalytics} />
                     </Card>
 
                     <Card>
                         <Title>EVOLUÇÃO POR CATEGORIA NO TEMPO</Title>
-                        <CategoryTrendChart />
+                        <CategoryTrendChart data={filteredAnalytics}/>
                     </Card>
                 </LeftColumn>
 
                 <RightColumn>
                     <Card id="distribution-chart">
                         <Title>DISTRIBUIÇÃO GERAL</Title>
-                        <GeneralDistributionChart />
+                        <GeneralDistributionChart data={filteredAnalytics} />
                     </Card>
                 </RightColumn>
             </AnalyticsGrid>
