@@ -2,6 +2,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } f
 import { useState, useEffect } from "react";
 import { formatCurrency } from "../../utils/formatCurrency";
 import type { AnalyticsData } from "../../types/analytics";
+import { formatMonthBR } from "../../utils/formatMonthBR";
 
 const CATEGORY_COLORS = ["#3498db", "#e67e22", "#9b59b6", "#1abc9c", "#f1c40f", "#e74c3c"]
 
@@ -34,9 +35,9 @@ function CategoryTrendChart() {
     return (
         <ResponsiveContainer width="100%" height={300}>
             <LineChart data={chartData}>
-                <XAxis dataKey="month"/>
+                <XAxis dataKey="month" tickFormatter={formatMonthBR}/>
                 <YAxis />
-                <Tooltip formatter={(val) => formatCurrency(Number(val))} />
+                <Tooltip formatter={(val) => formatCurrency(Number(val))} labelFormatter={(label) => formatMonthBR(String(label))}/>
                 <Legend />
                 {categories.map((cat, index) => (
                     <Line 

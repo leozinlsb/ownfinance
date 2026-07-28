@@ -1,6 +1,8 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { useEffect, useState } from "react";
 import type { AnalyticsData } from "../../types/analytics";
+import { formatMonthBR } from "../../utils/formatMonthBR";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 
 function IncomeOutcomeChart() {
@@ -35,9 +37,9 @@ function IncomeOutcomeChart() {
     return (
         <ResponsiveContainer width="100%" height={300}>
             <BarChart data={chartData}>
-                <XAxis dataKey="month" />
+                <XAxis dataKey="month" tickFormatter={formatMonthBR}/>
                 <YAxis />
-                <Tooltip />
+                <Tooltip labelFormatter={(label) => formatMonthBR(String(label))} formatter={(value) => formatCurrency(Number(value))}/>
                 <Legend />
                 <Bar dataKey="income" fill="#2ecc71" name="Entrada" />
                 <Bar dataKey="outcome" fill="#e74c3c" name="Saídas" />
