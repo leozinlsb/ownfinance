@@ -48,7 +48,7 @@ function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
 
         const formData = new FormData(event.currentTarget);
 
-        //Creating the transaction object to send it to the backend
+        
         const newTransaction = {
             amount: Number(amount.replace(/\D/g, "")) / 100,
             description: formData.get("description") as string,
@@ -79,7 +79,7 @@ function TransactionForms({ onAddTransaction }: TransactionFormsProps) {
             .catch(error => console.error("Erro ao salvar: ", error));
     }
 
-    //formatting monetary values
+    
     const [amount, setAmount] = useState("");
 
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {

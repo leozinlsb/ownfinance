@@ -173,7 +173,7 @@ function Analytics() {
                 </LeftColumn>
 
                 <RightColumn>
-                    <Card>
+                    <Card id="distribution-chart">
                         <Title>DISTRIBUIÇÃO GERAL</Title>
                         <GeneralDistributionChart />
                     </Card>
